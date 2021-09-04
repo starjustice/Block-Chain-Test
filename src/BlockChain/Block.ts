@@ -4,20 +4,37 @@ export class Block {
   index: any;
   timeStamp: any;
   info: any;
-  nextHash: string;
+  previousHash: string;
+  hash: string;
+  nonce: number;
 
-  constructor(index: any, timestamp: any, info: any, nextHash?: any) {
+  constructor(index: any, timestamp: any, info: any, previousHash?: any) {
     this.index = index;
     this.timeStamp = timestamp;
     this.info = info;
-    this.nextHash = nextHash;
+    this.previousHash = previousHash;
+    this.hash = this.computeHash();
+    this.nonce = 0;
   }
-  computerHash() {
+  computeHash() {
     return hash
       .createHash("sha256")
       .update(
-        this.info + this.nextHash + this.timeStamp + JSON.stringify(this.info)
+        this.info +
+          this.previousHash +
+          this.timeStamp +
+          JSON.stringify(this.info) +
+          this.nonce
       )
       .digest("base64");
+  }
+  mineBlock(difficulty: number) {
+    while (
+      this.hash.substring(0, difficulty) !== Array(difficulty + 1).join("0")
+    ) {
+      this.nonce++;
+      this.hash = this.computeHash();
+    }
+    console.log("block mined", this.hash);
   }
 }

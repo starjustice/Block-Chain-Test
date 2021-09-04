@@ -15,20 +15,20 @@ export class BlockChain {
   }
 
   addNewBlock(newBlock: any) {
-    newBlock.nextHash = this.obtainLatestBlock().hash;
-    newBlock.hash = newBlock.computerHash();
+    newBlock.previousHash = this.obtainLatestBlock().hash;
+    newBlock.mineBlock(2);
     this.block1chain.push(newBlock);
   }
 
   checkChainValidity() {
     for (let i = 1; i < this.block1chain.length; i++) {
       const currentBlock = this.block1chain[i];
-      const nextHash = this.block1chain[i - 1];
+      const previousHash = this.block1chain[i - 1];
 
       if (currentBlock.hash !== currentBlock.computeHash()) {
         return false;
       }
-      if (currentBlock.nextHash !== nextHash.hash) return false;
+      if (currentBlock.previousHash !== previousHash.hash) return false;
     }
     return true;
   }
