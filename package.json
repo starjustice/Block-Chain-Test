@@ -1,0 +1,19 @@
+{
+  "name": "block-chain",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^16.7.10",
+    "crypto": "^1.0.1",
+    "typescript": "^4.4.2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./bin/app.js",
+    "dev": "ts-node ./src/app.ts"
+  },
+  "devDependencies": {
+    "ts-node": "^10.2.1"
+  }
+}
