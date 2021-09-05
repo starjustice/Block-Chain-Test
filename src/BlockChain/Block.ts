@@ -3,15 +3,14 @@ import hash from "crypto";
 export class Block {
   index: any;
   timeStamp: any;
-  info: any;
+  transactions: any;
   previousHash: string;
   hash: string;
   nonce: number;
 
-  constructor(index: any, timestamp: any, info: any, previousHash?: any) {
-    this.index = index;
+  constructor(timestamp: any, transactions: any, previousHash?: any) {
     this.timeStamp = timestamp;
-    this.info = info;
+    this.transactions = transactions;
     this.previousHash = previousHash;
     this.hash = this.computeHash();
     this.nonce = 0;
@@ -20,10 +19,10 @@ export class Block {
     return hash
       .createHash("sha256")
       .update(
-        this.info +
+        this.transactions +
           this.previousHash +
           this.timeStamp +
-          JSON.stringify(this.info) +
+          JSON.stringify(this.transactions) +
           this.nonce
       )
       .digest("base64");
